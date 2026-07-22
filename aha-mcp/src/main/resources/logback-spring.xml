@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <!--
+      STDIO 模式的 MCP Server 必须保证 stdout 干净（只走 JSON-RPC 协议）。
+      默认 Spring Boot 会把日志打到 stdout，会污染协议导致 WorkBuddy 解析失败。
+      这里把所有日志重定向到 System.err，让 stdout 专供 MCP 通信。
+    -->
+    <appender name="STDERR" class="ch.qos.logback.core.ConsoleAppender">
+        <target>System.err</target>
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} %-5level [%thread] %logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <logger name="org.springframework.ai" level="INFO"/>
+    <root level="INFO">
+        <appender-ref ref="STDERR"/>
+    </root>
+</configuration>
