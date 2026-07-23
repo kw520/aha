@@ -14,21 +14,21 @@
     <name>aha-mcp</name>
 
     <dependencies>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>org.springframework.boot</groupId>-->
+<!--            <artifactId>spring-boot-starter-web</artifactId>-->
+<!--        </dependency>-->
         <!-- 支持 STDIO + HTTP 双模式的 MCP Server（WebMVC 版本） -->
         <dependency>
             <groupId>org.springframework.ai</groupId>
             <artifactId>spring-ai-starter-mcp-server-webmvc</artifactId>
         </dependency>
         <!-- WebMVC transport 依赖（需显式声明，否则自动配置条件不满足） -->
-        <dependency>
-            <groupId>io.modelcontextprotocol.sdk</groupId>
-            <artifactId>mcp-spring-webmvc</artifactId>
-            <version>0.17.0</version>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>io.modelcontextprotocol.sdk</groupId>-->
+<!--            <artifactId>mcp-spring-webmvc</artifactId>-->
+<!--            <version>0.17.0</version>-->
+<!--        </dependency>-->
         <!-- 通义千问 ChatModel：通过 DashScope 的 OpenAI 兼容模式直连，纯 Spring AI，无需 Spring AI Alibaba -->
         <dependency>
             <groupId>org.springframework.ai</groupId>
