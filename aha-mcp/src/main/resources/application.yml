@@ -12,7 +12,7 @@ spring:
         name: aha-mcp
         version: 1.0.0
         type: SYNC
-        base-path: /mcp
+        protocol: STREAMABLE
         annotation-scanner:
           enabled: false
     openai:
