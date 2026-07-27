@@ -43,6 +43,49 @@ public class ContentGenerator {
         return parseOutlines(json);
     }
 
+    /**
+     * 生成约 60 秒的短视频口播稿：开场钩子 + 3 个核心论点 + 收尾行动号召。
+     */
+    public String generateVoiceoverScript(String topic) {
+        if (chatModel == null) {
+            throw new IllegalStateException(
+                    "未配置 AI_DASHSCOPE_API_KEY，无法使用 LLM 生成文案。请在环境变量中配置后重试。");
+        }
+        ChatClient chatClient = ChatClient.builder(chatModel).build();
+        String prompt = String.format(
+                "请为主题「%s」写一段约 60 秒的短视频口播稿（中文）。" +
+                "严格只输出正文文本，不要包含任何额外说明、标题或 markdown 标记。" +
+                "结构要求：" +
+                "1. 开场钩子：1 句话抓住注意力（约 5 秒）；" +
+                "2. 三个核心论点：每个论点配一句解释（每个约 15 秒）；" +
+                "3. 收尾行动号召：1 句话引导观众（约 5 秒）。" +
+                "语气自然口语化，像在和观众聊天，避免书面腔。",
+                topic);
+        return chatClient.prompt().user(prompt).call().content();
+    }
+
+    /**
+     * 生成思维导图大纲（Markdown 多级列表），可直接用 markmap 渲染。
+     */
+    public String generateMindmapOutline(String topic) {
+        if (chatModel == null) {
+            throw new IllegalStateException(
+                    "未配置 AI_DASHSCOPE_API_KEY，无法使用 LLM 生成文案。请在环境变量中配置后重试。");
+        }
+        ChatClient chatClient = ChatClient.builder(chatModel).build();
+        String prompt = String.format(
+                "请为主题「%s」生成一份思维导图大纲，用于 markmap 渲染。" +
+                "严格只输出 Markdown 格式的多级无序列表（用 - 列表项，缩进表示层级），" +
+                "不要包含任何额外说明、标题或代码块标记（不要使用 ``` 包裹）。" +
+                "要求：" +
+                "- 第一层是中心主题本身；" +
+                "- 展开 2-4 个主要分支；" +
+                "- 每个主要分支下再展开 2-4 个子节点；" +
+                "- 内容需专业、与主题强相关，覆盖关键概念与脉络。",
+                topic);
+        return chatClient.prompt().user(prompt).call().content();
+    }
+
     private List<SlideOutline> parseOutlines(String json) {
         try {
             String cleaned = extractJsonArray(json);
