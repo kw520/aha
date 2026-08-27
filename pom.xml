@@ -18,6 +18,7 @@
     <name>aha</name>
 
     <modules>
+        <module>aha-common</module>
         <module>aha-mcp</module>
     </modules>
 

@@ -1,4 +1,4 @@
-package com.aha.mcp.util;
+package com.aha.common.util;
 
 import org.springframework.stereotype.Component;
 
@@ -11,7 +11,7 @@ import java.io.IOException;
  * 与 PPT 的临时落盘路径约定保持一致（java.io.tmpdir 即 Windows 的 %TEMP%）。
  */
 @Component
-public class TempFileWriter {
+public class TempFileUtils {
 
     public String write(String prefix, String ext, String content) throws IOException {
         String dir = System.getProperty("java.io.tmpdir");
