@@ -1,7 +1,7 @@
 package com.aha.mcp.tool;
 
+import com.aha.common.util.TempFileUtils;
 import com.aha.mcp.service.ContentGenerator;
-import com.aha.mcp.util.TempFileWriter;
 import org.springframework.ai.tool.annotation.Tool;
 import org.springframework.ai.tool.annotation.ToolParam;
 import org.springframework.context.annotation.Lazy;
@@ -15,12 +15,12 @@ import org.springframework.stereotype.Service;
 public class VoiceoverScriptTool {
 
     private final ContentGenerator contentGenerator;
-    private final TempFileWriter tempFileWriter;
+    private final TempFileUtils tempFileUtils;
 
     public VoiceoverScriptTool(@Lazy ContentGenerator contentGenerator,
-                               TempFileWriter tempFileWriter) {
+                               TempFileUtils tempFileUtils) {
         this.contentGenerator = contentGenerator;
-        this.tempFileWriter = tempFileWriter;
+        this.tempFileUtils = tempFileUtils;
     }
 
     @Tool(name = "generate_voiceover_script",
@@ -28,7 +28,7 @@ public class VoiceoverScriptTool {
     public String generateVoiceoverScript(
             @ToolParam(description = "口播稿主题，例如：为什么年轻人开始攒钱") String topic) throws Exception {
         String script = contentGenerator.generateVoiceoverScript(topic);
-        String path = tempFileWriter.write("aha-voiceover", ".txt", script);
+        String path = tempFileUtils.write("aha-voiceover", ".txt", script);
         return "口播稿已生成：" + path;
     }
 }

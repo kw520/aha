@@ -1,7 +1,7 @@
 package com.aha.mcp.tool;
 
+import com.aha.common.util.TempFileUtils;
 import com.aha.mcp.service.ContentGenerator;
-import com.aha.mcp.util.TempFileWriter;
 import org.springframework.ai.tool.annotation.Tool;
 import org.springframework.ai.tool.annotation.ToolParam;
 import org.springframework.context.annotation.Lazy;
@@ -15,12 +15,12 @@ import org.springframework.stereotype.Service;
 public class MindmapTool {
 
     private final ContentGenerator contentGenerator;
-    private final TempFileWriter tempFileWriter;
+    private final TempFileUtils tempFileUtils;
 
     public MindmapTool(@Lazy ContentGenerator contentGenerator,
-                       TempFileWriter tempFileWriter) {
+                       TempFileUtils tempFileUtils) {
         this.contentGenerator = contentGenerator;
-        this.tempFileWriter = tempFileWriter;
+        this.tempFileUtils = tempFileUtils;
     }
 
     @Tool(name = "generate_mindmap",
@@ -28,7 +28,7 @@ public class MindmapTool {
     public String generateMindmap(
             @ToolParam(description = "思维导图中心主题，例如：人工智能") String topic) throws Exception {
         String md = contentGenerator.generateMindmapOutline(topic);
-        String path = tempFileWriter.write("aha-mindmap", ".md", md);
+        String path = tempFileUtils.write("aha-mindmap", ".md", md);
         return "思维导图已生成：" + path;
     }
 }

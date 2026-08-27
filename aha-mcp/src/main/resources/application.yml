@@ -4,6 +4,8 @@ server:
 spring:
   application:
     name: aha-mcp
+  config:
+    import: "optional:file:.env[.properties]"
   main:
     allow-circular-references: true
   ai:
